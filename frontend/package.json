@@ -1,0 +1,29 @@
+{
+  "name": "tiny-link-frontend",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "start:local": "ng serve --proxy-config proxy.conf.json",
+    "build": "ng build"
+  },
+  "dependencies": {
+    "@angular/common": "^21.2.13",
+    "@angular/compiler": "^21.2.13",
+    "@angular/core": "^21.2.13",
+    "@angular/forms": "^21.2.13",
+    "@angular/platform-browser": "^21.2.13",
+    "@angular/router": "^21.2.13",
+    "rxjs": "^7.8.1",
+    "tslib": "^2.6.2",
+    "zone.js": "~0.16.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "^21.2.13",
+    "@angular/cli": "^21.2.13",
+    "@angular/compiler-cli": "^21.2.13",
+    "@types/node": "^20.11.30",
+    "typescript": "^5.9.0"
+  }
+}
