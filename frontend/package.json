@@ -1,29 +1,33 @@
 {
-  "name": "tiny-link-frontend",
-  "version": "0.0.1",
-  "private": true,
+  "name": "frontend",
+  "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "start:local": "ng serve --proxy-config proxy.conf.json",
-    "build": "ng build"
+    "build": "ng build",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test"
   },
+  "private": true,
+  "packageManager": "npm@11.9.0",
   "dependencies": {
-    "@angular/common": "^21.2.13",
-    "@angular/compiler": "^21.2.13",
-    "@angular/core": "^21.2.13",
-    "@angular/forms": "^21.2.13",
-    "@angular/platform-browser": "^21.2.13",
-    "@angular/router": "^21.2.13",
-    "rxjs": "^7.8.1",
-    "tslib": "^2.6.2",
-    "zone.js": "~0.16.0"
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/platform-browser": "^21.2.0",
+    "@angular/router": "^21.2.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^21.2.13",
-    "@angular/cli": "^21.2.13",
-    "@angular/compiler-cli": "^21.2.13",
-    "@types/node": "^20.11.30",
-    "typescript": "^5.9.0"
+    "@angular/build": "^21.2.3",
+    "@angular/cli": "^21.2.3",
+    "@angular/compiler-cli": "^21.2.0",
+    "jsdom": "^28.0.0",
+    "prettier": "^3.9.4",
+    "typescript": "~5.9.2",
+    "vitest": "^4.0.8"
   }
 }
