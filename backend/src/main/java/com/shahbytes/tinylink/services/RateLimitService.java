@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
+import tools.jackson.databind.ObjectMapper;
 
 @Service
 @RequiredArgsConstructor
@@ -18,14 +18,13 @@ import java.util.concurrent.TimeUnit;
 public class RateLimitService {
 
     private final RedisTemplate<String, Object> redisTemplate;
+    private final ObjectMapper objectMapper;
 
     @Value("${tinylink.rate-limit.requests-per-minute}")
     private int requestsPerMinute;
 
     @Value("${tinylink.rate-limit.requests-per-hour}")
     private int requestsPerHour;
-
-    private final ConcurrentHashMap<String, RateLimitData> rateLimitData = new ConcurrentHashMap<>();
 
     private static final String REDIS_KEY_PREFIX = "ratelimit:";
 
@@ -39,12 +38,12 @@ public class RateLimitService {
         RateLimitData data = getRateLImitDataFromRedis(redisKey);
 
         if (data == null) {
-            data = rateLimitData.computeIfAbsent(clientIp, k -> RateLimitData.builder()
+            data = RateLimitData.builder()
                     .minuteCount(0)
                     .hourCount(0)
                     .minuteWindowStart(now)
                     .hourWindowStart(now)
-                    .build());
+                    .build();
         }
 
         if (isWithinMinuteWindow(data, now)) {
@@ -97,7 +96,18 @@ public class RateLimitService {
 
     private RateLimitData getRateLImitDataFromRedis(String redisKey) {
         try {
-            return (RateLimitData) redisTemplate.opsForValue().get(redisKey);
+            Object value = redisTemplate.opsForValue().get(redisKey);
+
+            if (value == null) {
+                return null;
+            }
+
+            if (value instanceof RateLimitData) {
+                return (RateLimitData) value;
+            }
+
+            return objectMapper.convertValue(value, RateLimitData.class);
+
         } catch (Exception e) {
             log.warn("Failed to get rate limit data from Redis: {}", e.getMessage());
             return null;
